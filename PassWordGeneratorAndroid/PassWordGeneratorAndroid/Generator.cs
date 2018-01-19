@@ -14,7 +14,7 @@ namespace PassWordGeneratorAndroid
 {
     public static class Generator
     {
-        public static string generatePassNum(string salt)
+        public static string generatePass(string salt)
         {
             StringBuilder sb = new StringBuilder();
             int firstPrime = generateRandomPrime();
@@ -23,48 +23,48 @@ namespace PassWordGeneratorAndroid
 
             sb.Append(salt);
             sb.Append(passNum.ToString());
-         
+
             return sb.ToString();
         }
 
         public static int generateRandomPrime()
         {
             Random ran = new Random();
-            int ranNum = ran.Next(0, 100);
+            int ranNum = ran.Next(0, 1000);
 
             while (!isPrime(ranNum))
             {
-                ranNum = ran.Next(0, 100);
+                ranNum = ran.Next(0, 1000);
             }
-
             return ranNum;
         }
 
         public static bool isPrime(int n)
         {
-            bool prime = true;
 
-            if(n <= 1)
+            if (n <= 1)
             {
-                prime = false;
+                return false;
             }
-            else if(n <= 3)
+            else if (n <= 3)
             {
-                prime = true;
+                return true;
             }
-            else
+            else if (n % 2 == 0 || n % 3 == 0)
             {
-                int i = 5;
-                while(i*i <= n)
+                return false;
+            }
+
+            int i = 5;
+            while (i * i <= n)
+            {
+                if (n % i == 0 || n % (i + 2) == 0)
                 {
-                    if(n % i == 0 || n % (i+2) == 0)
-                    {
-                        prime = false;
-                    }
+                    return false;
                 }
+                i += 6;
             }
-
-            return prime;
+            return true;
         }
     }
 }
